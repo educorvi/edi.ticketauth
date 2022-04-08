@@ -1,61 +1,38 @@
 # -*- coding: utf-8 -*-
-# from plone.app.textfield import RichText
+from plone.app.textfield import RichText
 # from plone.autoform import directives
 from plone.dexterity.content import Item
 # from plone.namedfile import field as namedfile
 from plone.supermodel import model
 # from plone.supermodel.directives import fieldset
 # from z3c.form.browser.radio import RadioFieldWidget
-# from zope import schema
+from zope import schema
 from zope.interface import implementer
 
+from datetime import datetime
+from datetime import timedelta
+import random
 
 # from edi.ticketauth import _
+
+
+def titlefactory():
+    return 'Ticket '+datetime.now().strftime("%d.%m.%Y.%H.%M.%S")
+
+def ticketfactory():
+    return str(random.randrange(100000, 999999)) 
+
+def validfactory():
+    return datetime.now() + timedelta(days=21)
 
 
 class ITicket(model.Schema):
     """ Marker interface and Dexterity Python Schema for Ticket
     """
-    # If you want, you can load a xml model created TTW here
-    # and customize it in Python:
 
-    # model.load('ticket.xml')
-
-    # directives.widget(level=RadioFieldWidget)
-    # level = schema.Choice(
-    #     title=_(u'Sponsoring Level'),
-    #     vocabulary=LevelVocabulary,
-    #     required=True
-    # )
-
-    # text = RichText(
-    #     title=_(u'Text'),
-    #     required=False
-    # )
-
-    # url = schema.URI(
-    #     title=_(u'Link'),
-    #     required=False
-    # )
-
-    # fieldset('Images', fields=['logo', 'advertisement'])
-    # logo = namedfile.NamedBlobImage(
-    #     title=_(u'Logo'),
-    #     required=False,
-    # )
-
-    # advertisement = namedfile.NamedBlobImage(
-    #     title=_(u'Advertisement (Gold-sponsors and above)'),
-    #     required=False,
-    # )
-
-    # directives.read_permission(notes='cmf.ManagePortal')
-    # directives.write_permission(notes='cmf.ManagePortal')
-    # notes = RichText(
-    #     title=_(u'Secret Notes (only for site-admins)'),
-    #     required=False
-    # )
-
+    title = schema.TextLine(title=u'Titel', defaultFactory=titlefactory)
+    ticket = schema.TextLine(title=u'Ticket', defaultFactory=ticketfactory)
+    valid = schema.Datetime(title=u'gültig bis', defaultFactory=validfactory)
 
 @implementer(ITicket)
 class Ticket(Item):
