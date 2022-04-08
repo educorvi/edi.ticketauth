@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2007-2019 NovaReto GmbH
 # lwalther@novareto.de
+from datetime import datetime
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from App.class_init import InitializeClass
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
@@ -52,8 +53,21 @@ class EdiTicketAuth(BasePlugin):
         password = credentials.get( 'password' )
         if login is None or password is None:
             return None
-        if password == '999999':
-            return (login, login)
+        member = ploneapi.user.get(username = login)
+        if not member:
+            return None
+        userid = member.getId()
+        membership = ploneapi.portal.get_tool(name='portal_membership')
+        homefolder = membership.getHomeFolder(userid)
+        if not homefolder:
+            return None
+        tickets = homefolder.contentItems()
+        for i in tickets:
+            if i[0] == 'ticket':
+                ticket = i[1]
+                if ticket.valid > datetime.now():
+                    if ticket.ticket == password:
+                        return (userid, login)
         return None
 
 InitializeClass(EdiTicketAuth)
