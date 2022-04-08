@@ -9,5 +9,5 @@ class IEdiTicketauthLayer(IDefaultBrowserLayer):
     """Marker interface that defines a browser layer."""
 
 
-class IEdiTicketAuth(interfaces.plugins.IAuthenticationPlugin):
+class IEdiTicketAuthPlugin(interfaces.plugins.IAuthenticationPlugin):
     pass
