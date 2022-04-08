@@ -1,0 +1,5 @@
+==============
+edi.ticketauth
+==============
+
+User documentation
