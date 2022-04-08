@@ -63,8 +63,8 @@ class EdiTicketAuth(BasePlugin):
             return None
         tickets = homefolder.contentItems()
         for i in tickets:
-            if i[0] == 'ticket':
-                ticket = i[1]
+            ticket = i[1]
+            if ticket.portal_type == "Ticket":
                 if ticket.valid > datetime.now():
                     if ticket.ticket == password:
                         return (userid, login)
