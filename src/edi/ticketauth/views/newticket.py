@@ -35,7 +35,8 @@ class Newticket(BrowserView):
         resultdata = result.json()
         if resultdata['status'] == 'success':
             #ploneapi.statusmeldung('Ihnen wurde eine E-Mail mit dem Ticket zugestellt')
+            ploneapi.portal.show_message(message='Ihnen wurde eine E-Mail mit dem Ticket zugestellt', request=self.request, type='info')
         else:
-            #ploneapi.statusmeldung(resultdata['message'])
+            ploneapi.portal.show_message(message='Es ist uns ein Fehler unterlaufen', request=self.request, type='error')
         return
 
