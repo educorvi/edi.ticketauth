@@ -1,13 +1,33 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="edi.ticketauth"
-      metal:use-macro="context/main_template/macros/master">
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="example.conference">
 <body>
-  <metal:block fill-slot="content-core">
-      <h2 i18n:translate="">Sample View</h2>
-      <p tal:content="view/msg">this gets replaced</p>
-  </metal:block>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+      <div class="container">
+        <div class="row">
+	  <div class="col-12 col-lg-9">
+	<h1>Neues Ticket anfordern</h1>
+          <form tal:attributes="action python:context.absolute_url()+'/newticket'">
+	  <div class="form-group">
+	    <label for="InputEmail">E-Mail Adresse</label>
+	    <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
+	    <small id="emailHelp" class="form-text text-muted">Bitte geben Sie die im System hinterlegte E-Mail Adresse ein."</small>
+	  </div>
+	  <button type="submit" class="btn btn-primary">Absenden</button>
+	</form>
+	  </div>
+	</div>
+      </div>
+    </tal:main-macro>
+</metal:main>
+
 </body>
 </html>
+
+
