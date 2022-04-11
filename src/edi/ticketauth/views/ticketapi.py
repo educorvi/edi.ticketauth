@@ -14,7 +14,8 @@ class Ticketapi(BrowserView):
         if not email:
             result = {'status': 'error', 'message': 'Fehler bei der Übermittlung der E-Mail-Adresse'}
             return jsonlib.write(result)
-        self.get_new_ticket(email)
+        result = self.get_new_ticket(email)
+        return jsonlib.write(result)
 
     def get_new_ticket(self, email):
         user = ploneapi.user.get(username=email) 
@@ -30,7 +31,6 @@ class Ticketapi(BrowserView):
  
         ticketobject = ploneapi.content.create(type='Ticket', title='Ticket', container=memberfolder)
         ticket = ticketobject.ticket
-        print(ticket)
-        #ploneapi.sendEmailWithTicket
-        result = {'status':'success', 'message':''}
-        return jsonlib.write(result) 
+        #TODO: ploneapi.sendEmailWithTicket
+        result = {'status':'success'}
+        return result

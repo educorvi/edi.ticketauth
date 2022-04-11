@@ -32,11 +32,10 @@ class Newticket(BrowserView):
         payload = {'email': email}
         headers = {'Accept': 'application/json','Authorization': 'Bearer %s' % authtoken}
         result = requests.get(url, params=payload, headers=headers, verify=False)
-        import pdb;pdb.set_trace()
         resultdata = result.json()
         if resultdata['status'] == 'success':
-            ploneapi.statusmeldung('Ihnen wurde eine E-Mail mit dem Ticket zugestellt')
+            #ploneapi.statusmeldung('Ihnen wurde eine E-Mail mit dem Ticket zugestellt')
         else:
-            ploneapi.statusmeldung(resultdata['message'])
+            #ploneapi.statusmeldung(resultdata['message'])
         return
 
