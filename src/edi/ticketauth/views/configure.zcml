@@ -8,7 +8,7 @@
 
   <browser:page
     name="newticket"
-    for="Products.CMFCore.interfaces.IFolderish"
+    for="*"
     class=".newticket.Newticket"
     template="newticket.pt"
     permission="zope2.View"

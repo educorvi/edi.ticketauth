@@ -14,4 +14,13 @@ class Newticket(BrowserView):
     def __call__(self):
         # Implement your own actions:
         self.msg = _(u'A small message')
+
+        email = self.request.get('email')
+        if email:
+            self.create_ticket(email)
+
         return self.index()
+
+    def create_ticket(self):
+        authtoken = self.AuthToken()
+
