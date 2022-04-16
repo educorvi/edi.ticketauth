@@ -36,9 +36,9 @@ Benutzer können über die URL `/@@newticket` jederzeit spontan ein neues Ticket
 
 ### Admins
 
-Admins können über das Controlpanel: `/@@editicket-controlpanel` Einstellungen für edi.ticketauth vornehmen.
-Admins können über den Browserview: `/@@create-homefolders`  nachträglich Persönliche Benutzerordner anlegen.
-Admins können über den Browserview: `/@@create-tickets` Tickets für den Massenversand erzeugen.
+- Admins können über das Controlpanel: `/@@editicket-controlpanel` Einstellungen für edi.ticketauth vornehmen.
+- Admins können über den Browserview: `/@@create-homefolders` nachträglich Benutzerordner anlegen.
+- Admins können über den Browserview: `/@@create-tickets` Tickets für den Massenversand erzeugen.
 
 ### API
 
@@ -88,15 +88,14 @@ Danach Ausführung von: `bin/buildout`
 
 ## Quellen
 
-- Issue Tracker: https://github.com/collective/edi.ticketauth/issues
-- Source Code: https://github.com/collective/edi.ticketauth
-- Documentation: https://docs.plone.org/foo/bar
+- Issue Tracker: https://github.com/educorvi/edi.ticketauth/issues
+- Source Code: https://github.com/educorvi/edi.ticketauth
 
 
 ## Support
 
-Seppo Walther (seppo.walther@educorvi.de)
-Lars Walther (lars.walther@educorvi.de)
+- Seppo Walther (seppo.walther@educorvi.de)
+- Lars Walther (lars.walther@educorvi.de)
 
 
 ## Lizenz
