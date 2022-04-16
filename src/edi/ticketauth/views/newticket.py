@@ -5,16 +5,13 @@ from Products.Five.browser import BrowserView
 from plone import api as ploneapi
 import requests
 
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-
 class Newticket(BrowserView):
-    # If you want to define a template here, please remove the template from
-    # the configure.zcml registration of this view.
-    # template = ViewPageTemplateFile('newticket.pt')
 
     def __call__(self):
-        self.login = {'login': 'admin', 'password': 'admin'}
+        ticketlogin = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.ticketlogin')
+        ticketpassword = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.ticketpassword')
+        self.login = {'login': ticketlogin, 'password': ticketpassword}
+        self.formhelp = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.formhelp')
         self.authurl = ploneapi.portal.get().absolute_url()+'/@login' 
         email = self.request.get('email')
         if email:
@@ -34,9 +31,8 @@ class Newticket(BrowserView):
         result = requests.get(url, params=payload, headers=headers, verify=False)
         resultdata = result.json()
         if resultdata['status'] == 'success':
-            #ploneapi.statusmeldung('Ihnen wurde eine E-Mail mit dem Ticket zugestellt')
-            ploneapi.portal.show_message(message='Ihnen wurde eine E-Mail mit dem Ticket zugestellt', request=self.request, type='info')
+            statusmessage = "Ihnen wurde gerade eine E-Mail mit dem neuen Login-Ticket zugestellt. Bitte schauen Sie auch in Ihren SPAM-Ordner."
+            ploneapi.portal.show_message(message=statusmessage, request=self.request, type='info')
         else:
-            ploneapi.portal.show_message(message='Es ist uns ein Fehler unterlaufen', request=self.request, type='error')
+            ploneapi.portal.show_message(message=resultdata['message'], request=self.request, type='error')
         return
-

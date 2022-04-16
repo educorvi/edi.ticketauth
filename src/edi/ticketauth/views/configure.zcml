@@ -10,7 +10,7 @@
     name="ticketapi"
     for="*"
     class=".ticketapi.Ticketapi"
-    permission="zope2.View"
+    permission="cmf.ModifyPortalContent"
     />
 
   <browser:page
@@ -21,5 +21,20 @@
     permission="zope2.View"
     />
 
+  <browser:page
+    name="create-homefolders"
+    for="*"
+    class=".management.HomeFolders"
+    template="homefolders.pt"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:page
+    name="create-tickets"
+    for="*"
+    class=".management.TicketsForUsers"
+    template="ticketsforusers.pt"
+    permission="cmf.ModifyPortalContent"
+    />
 
 </configure>

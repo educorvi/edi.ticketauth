@@ -12,15 +12,16 @@
       <div class="container">
         <div class="row">
 	  <div class="col-12 col-lg-9">
-	<h1>Neues Ticket anfordern</h1>
-          <form tal:attributes="action python:context.absolute_url()+'/newticket'">
-	  <div class="form-group">
-	    <label for="InputEmail">E-Mail Adresse</label>
-	    <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
-	    <small id="emailHelp" class="form-text text-muted">Bitte geben Sie die im System hinterlegte E-Mail Adresse ein."</small>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Absenden</button>
-	</form>
+	    <h1>Neues Ticket anfordern</h1>
+            <form tal:attributes="action python:context.absolute_url()+'/newticket'">
+              <p tal:content="view/formhelp"/>  
+	      <div class="form-group">
+	        <label for="InputEmail">E-Mail Adresse</label>
+	        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
+	        <small id="emailHelp" class="form-text text-muted">Bitte geben Sie die im System hinterlegte E-Mail Adresse ein.</small>
+	      </div>
+	      <button type="submit" class="btn btn-primary">Absenden</button>
+	    </form>
 	  </div>
 	</div>
       </div>
@@ -29,5 +30,4 @@
 
 </body>
 </html>
-
 

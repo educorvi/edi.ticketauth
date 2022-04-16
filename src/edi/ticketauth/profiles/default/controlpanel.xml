@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel">
+  <configlet
+      title="Einstellungen edi.ticketauth"
+      action_id="edi.ticketauth.configpanel"
+      appId="edi.ticketauth"
+      category="Products"
+      condition_expr=""
+      icon_expr=""
+      url_expr="string:${portal_url}/@@editicket-controlpanel"
+      visible="True">
+    <permission>Manage portal</permission>
+  </configlet>
+</object>
