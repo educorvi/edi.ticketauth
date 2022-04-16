@@ -12,7 +12,7 @@
       <div class="container">
         <div class="row">
 	  <div class="col-12">
-	    <h1>Ticketlist</h1>
+	    <h1>Liste mit Login-Tickets</h1>
 	    <p>Für die Benutzer des Portals wurden die folgenden Tickets angelegt:</p>
 	    <table class="table table-striped">
               <thead>
