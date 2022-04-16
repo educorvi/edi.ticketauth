@@ -1,4 +1,4 @@
-#edi.ticketauth
+# edi.ticketauth
 
 Das Plugin edi.ticketauth verfolgt das Ziel, die Schwelle für die Nutzung eines Portalangebotes zu reduzieren ohne die Sicherheit
 bedeutend einzuschränken. Allein die Verwendung von Benutzername + Kennwort für die Anmeldung hat sich bei gelegentlich genutzten 
@@ -17,7 +17,7 @@ verwendet werden kann. Außerdem können Administratoren Ticketlisten zum Massen
 und dementsprechend für die Anwendung eine Datenschutz-Folgenabschätzung erstellt werden muss. Insofern darf edi.ticketauth ausdrücklich
 nicht verwendet werden, wenn über die Anwendung Sozialdaten veröffentlicht werden.**
 
-##Leistungsmerkmale
+## Leistungsmerkmale
 
 - Anforderung eines Tickets durch den Benutzer `(BrowserView: /@@newticket)`
 - Content-Type "Ticket" zur Speicherung von Tickets im Homefolder der Benutzer
@@ -28,19 +28,19 @@ nicht verwendet werden, wenn über die Anwendung Sozialdaten veröffentlicht wer
 - Controlpanel (Einstellungen für edi.ticketauth: `/@@editicket-controlpanel`)
 
 
-##Dokumentation
+## Dokumentation
 
-###Benutzer
+### Benutzer
 
 Benutzer können über die URL `/@@newticket` jederzeit spontan ein neues Ticket anfordern. Das Ticket wird über E-Mail versendet.
 
-###Admins
+### Admins
 
 Admins können über das Controlpanel: `/@@editicket-controlpanel` Einstellungen für edi.ticketauth vornehmen.
 Admins können über den Browserview: `/@@create-homefolders`  nachträglich Persönliche Benutzerordner anlegen.
 Admins können über den Browserview: `/@@create-tickets` Tickets für den Massenversand erzeugen.
 
-###API
+### API
 
 ```
 import requests
@@ -59,11 +59,11 @@ ticket = {'status':'success', 'ticket':resultdata.get('ticket')}
 
 ```
 
-##Übersetzung
+## Übersetzung
 
 Das Add-On ist derzeit nur auf Deutsch verfügbar.
 
-##Installation
+## Installation
 
 Installation von edi.ticketauth durch Hinzufügen zur buildout.cfg:
 
@@ -86,19 +86,19 @@ Danach Ausführung von: `bin/buildout`
 - Über die Sicherheitseinstellungen des Plone Controlpanels muss die Option "Persönliche Benutzerordner" aktiviert werden. 
 
 
-##Quellen
+## Quellen
 
 - Issue Tracker: https://github.com/collective/edi.ticketauth/issues
 - Source Code: https://github.com/collective/edi.ticketauth
 - Documentation: https://docs.plone.org/foo/bar
 
 
-##Support
+## Support
 
 Seppo Walther (seppo.walther@educorvi.de)
 Lars Walther (lars.walther@educorvi.de)
 
 
-##Lizenz
+## Lizenz
 
 MIT Lizenz
