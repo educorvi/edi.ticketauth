@@ -17,11 +17,12 @@ class Ticketapi(BrowserView):
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
         email = self.request.get('email')
+        local = self.request.get('local')
         if not email:
             result = {'status': 'error', 'message': 'Fehler bei der Übermittlung der E-Mail-Adresse'}
             return jsonlib.write(result)
         result = self.get_new_ticket(email)
-        if result.get('status') == 'success':
+        if result.get('status') == 'success' and local == 'local':
             self.send_mail_with_ticket(email, result.get('ticket'))
         return jsonlib.write(result)
 

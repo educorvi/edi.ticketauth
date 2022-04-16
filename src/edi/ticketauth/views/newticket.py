@@ -26,7 +26,7 @@ class Newticket(BrowserView):
     def create_ticket(self, email):
         authtoken = self.getAuthToken()
         url = ploneapi.portal.get().absolute_url()+'/ticketapi' 
-        payload = {'email': email}
+        payload = {'email': email, 'local': 'local'}
         headers = {'Accept': 'application/json','Authorization': 'Bearer %s' % authtoken}
         result = requests.get(url, params=payload, headers=headers, verify=False)
         resultdata = result.json()
