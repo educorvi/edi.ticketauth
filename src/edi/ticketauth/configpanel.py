@@ -29,6 +29,8 @@ Passwortes verwenden."""
 
 class IEdiTicketSettings(Interface):
     
+    tickettitle = schema.TextLine(title="Bezeichnung des Tickets oder Kurzzeit-Passwortes (Don't call me Password).", default="Ticket")
+
     ticketlogin = schema.TextLine(title="Benutzer für das Anlegen von Tickets")
 
     ticketpassword = schema.Password(title="Passwort für den Benutzer")
@@ -41,6 +43,8 @@ class IEdiTicketSettings(Interface):
                            description="Es können folgende Variablen verwendet werden: name, portalname, ticketgueltigkeit,\
                                         email, ticket, portalurl. Bitte schreiben Sie {{ variablenname }}.",
                            default=defaultmailtext)
+    
+    formtitle = schema.TextLine(title="Überschrift über das Formular zur Anforderung eines neuen Tickets", default="Ticket anfordern")
 
     formhelp = schema.Text(title="Hilfetext für das Formular zur Anforderung eines neuen Tickets", default=defaultformhelp)
 

@@ -11,7 +11,9 @@ class Newticket(BrowserView):
         ticketlogin = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.ticketlogin')
         ticketpassword = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.ticketpassword')
         self.login = {'login': ticketlogin, 'password': ticketpassword}
+        self.formtitle = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.formtitle')
         self.formhelp = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.formhelp')
+        self.tickettitle = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.tickettitle')
         self.authurl = ploneapi.portal.get().absolute_url()+'/@login' 
         email = self.request.get('email')
         if email:
@@ -31,7 +33,7 @@ class Newticket(BrowserView):
         result = requests.get(url, params=payload, headers=headers, verify=False)
         resultdata = result.json()
         if resultdata['status'] == 'success':
-            statusmessage = "Ihnen wurde gerade eine E-Mail mit dem neuen Login-Ticket zugestellt. Bitte schauen Sie auch in Ihren SPAM-Ordner."
+            statusmessage = f"Ihnen wurde gerade eine E-Mail mit dem neuen {self.tickettitle} zugestellt. Bitte schauen Sie auch in Ihren SPAM-Ordner."
             ploneapi.portal.show_message(message=statusmessage, request=self.request, type='info')
         else:
             ploneapi.portal.show_message(message=resultdata['message'], request=self.request, type='error')

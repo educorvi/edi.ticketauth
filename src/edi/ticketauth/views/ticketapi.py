@@ -15,6 +15,7 @@ logger = logging.getLogger("edi.ticketauth")
 
 class Ticketapi(BrowserView):
     def __call__(self):
+        self.tickettitle = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.tickettitle')
         alsoProvides(self.request, IDisableCSRFProtection)
         email = self.request.get('email')
         local = self.request.get('local')
@@ -53,13 +54,13 @@ class Ticketapi(BrowserView):
     def get_new_ticket(self, email):
         user = ploneapi.user.get(username=email) 
         if not user:
-            result = {'status': 'error', 'message': 'Für diese E-Mail Adresse kann leider kein Ticket ausgestellt werden.'}
+            result = {'status': 'error', 'message': f'Für diese E-Mail Adresse kann leider kein {self.tickettitle} ausgestellt werden.'}
             return result
         userid = user.getId()
         membership = ploneapi.portal.get_tool(name='portal_membership')
         memberfolder = membership.getHomeFolder(userid)
         if not memberfolder:
-            result = {'status': 'error', 'message': 'Für diese E-Mail Adresse kann leider kein Ticket ausgestellt werden.'}
+            result = {'status': 'error', 'message': f'Für diese E-Mail Adresse kann leider kein {self.tickettitle} ausgestellt werden.'}
             return result
         ticketobject = ploneapi.content.create(type='Ticket',
                                                title=titlefactory(),
