@@ -18,6 +18,8 @@ class Newticket(BrowserView):
         email = self.request.get('email')
         if email:
             self.create_ticket(email)
+            portalurl = ploneapi.portal.get().absolute_url()
+            return self.request.response.redirect(portalurl)
         return self.index()
 
     def getAuthToken(self):
