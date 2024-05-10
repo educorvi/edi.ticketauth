@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from Products.Five.browser import BrowserView
-import jsonlib
+import json
 from plone import api as ploneapi
 from plone.protect.interfaces import IDisableCSRFProtection
 from zope.interface import alsoProvides
@@ -10,6 +10,7 @@ from email.mime.text import MIMEText
 from jinja2 import Template
 import logging
 from edi.ticketauth.content.ticket import titlefactory, ticketfactory, validfactory
+import smtplib
 
 logger = logging.getLogger("edi.ticketauth")
 
@@ -21,11 +22,11 @@ class Ticketapi(BrowserView):
         local = self.request.get('local')
         if not email:
             result = {'status': 'error', 'message': 'Fehler bei der Übermittlung der E-Mail-Adresse'}
-            return jsonlib.write(result)
+            return json.dumps(result) 
         result = self.get_new_ticket(email)
         if result.get('status') == 'success' and local == 'local':
             self.send_mail_with_ticket(email, result.get('ticket'))
-        return jsonlib.write(result)
+        return json.dumps(result)
 
     def send_mail_with_ticket(self, email, ticket):
         member = ploneapi.user.get(username=email)
@@ -47,7 +48,9 @@ class Ticketapi(BrowserView):
         msg_text = MIMEText(mailtext, _subtype='html', _charset='utf-8')
         msgAlternative.attach(msg_text)
         mail_host = ploneapi.portal.get_tool(name='MailHost')
-        mail_host.send(mime_msg.as_string())
+        with smtplib.SMTP(mail_host.smtp_host) as server:
+            server.sendmail(ploneapi.portal.get_registry_record('plone.email_from_address'), [email], mime_msg.as_string())
+
         logmessage = 'E-Mail gesendet an: %s' % email
         logger.info(logmessage)
 
