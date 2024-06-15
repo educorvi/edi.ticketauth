@@ -85,6 +85,15 @@ Danach Ausführung von: `bin/buildout`
  und aktviert werden.
 - Über die Sicherheitseinstellungen des Plone Controlpanels muss die Option "Persönliche Benutzerordner" aktiviert werden. 
 
+## Alternative Authentifizierung für Mandanten
+
+edi.ticketauth kann auch für die Authentifizierung von Mandanten genutzt werden. Dazu können in der Registry folgende Einträge gemacht werden:
+
+ticketmethod = 1|2 1 - Ticketauthentifizierung | 2 - Authentifizierung über Mandanten
+ticketdomain = subdomain.toplevel
+ticketgroup = ID der Gruppe
+
+Funktionsweise: wenn die E-Mail-Adresse der Benutzer:in auf die Ticketdomain endet wird die Benutzer:in der entsprechenden Gruppe zugeordnet
 
 ## Quellen
 
