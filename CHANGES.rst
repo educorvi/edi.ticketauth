@@ -1,10 +1,10 @@
 Changelog
 =========
 
-1.1 (unreleased)
+1.1 (2024-10-22)
 ----------------
 
-- Nothing changed yet.
+- Python Version Update
 
 
 1.0 (2024-10-22)
