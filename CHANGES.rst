@@ -1,9 +1,8 @@
 Changelog
 =========
 
-
-1.0a1 (unreleased)
+1.0 (unreleased)
 ------------------
 
-- Initial release.
-  [seppowalther]
+- Ticketauthentifizierung
+- Authentifizierung für Mandanten [lwalther@novareto.de]
