@@ -1,13 +1,13 @@
 # edi.ticketauth
 
 Das Plugin edi.ticketauth verfolgt das Ziel, die Schwelle für die Nutzung eines Portalangebotes zu reduzieren ohne die Sicherheit
-bedeutend einzuschränken. Allein die Verwendung von Benutzername + Kennwort für die Anmeldung hat sich bei gelegentlich genutzten 
-Online-Portalen als zu hohe Barriere für Benutzer erwiesen. Eine strenge Passwort-Policy, verbunden mit dem aufwendigen Verfahren 
+bedeutend einzuschränken. Allein die Verwendung von Benutzername + Kennwort für die Anmeldung hat sich bei gelegentlich genutzten
+Online-Portalen als zu hohe Barriere für Benutzer erwiesen. Eine strenge Passwort-Policy, verbunden mit dem aufwendigen Verfahren
 bei "Passwort vergessen" hat bei Benutzern zur Nicht-Nutzung eines Online-Angebotes geführt.
 
-Mit edi.ticketauth können Benutzer jederzeit spontan ein Login-Ticket per E-Mail anfordern. Das Login-Ticket besteht aktuell aus 
-einem 6-stelligen Zahlencode. Das Login-Ticket wird per E-Mail an die im System hinterlegte E-Mail-Adresse ausgeliefert. Das Ticket 
-hat eine begrenzte Gültigkeit, die vom Adminstrator eingestellt werden kann. Das Ticket wird im Homefolder des Benutzers gespeichert. 
+Mit edi.ticketauth können Benutzer jederzeit spontan ein Login-Ticket per E-Mail anfordern. Das Login-Ticket besteht aktuell aus
+einem 6-stelligen Zahlencode. Das Login-Ticket wird per E-Mail an die im System hinterlegte E-Mail-Adresse ausgeliefert. Das Ticket
+hat eine begrenzte Gültigkeit, die vom Adminstrator eingestellt werden kann. Das Ticket wird im Homefolder des Benutzers gespeichert.
 Das Ticket kann alternativ zum hinterlegten Passwort verwendet werden. Das Passwort behält weiterhin seine Gültigkeit.
 
 edi.ticketauth verfügt über eine API-Schnittstelle damit es auch von Drittanwendungen (z.B. beim Versand von Erinnerungs-E-Mails)
@@ -80,10 +80,10 @@ Danach Ausführung von: `bin/buildout`
 
 - Das Add-On edi.ticketauth muss nach dem Neustart des Servers im Plone Controlpanel installiert werden.
 - Es muss ein Benutzer angelegt und mit allen notwendigen Rechten ausgestattet werden, um in den Benutzerordnern Tickets anzulegen.
-- Im Controlpanel von edi.ticketauth müssen die notwendigen Einstellungen getroffen werden.  
+- Im Controlpanel von edi.ticketauth müssen die notwendigen Einstellungen getroffen werden.
 - Nach erfolgreicher Plone-Installation muss das PAS-Plugin über das Zope-Management-Interface (acl_users --> Add EdiTicketAuth) hinzugefügt
  und aktviert werden.
-- Über die Sicherheitseinstellungen des Plone Controlpanels muss die Option "Persönliche Benutzerordner" aktiviert werden. 
+- Über die Sicherheitseinstellungen des Plone Controlpanels muss die Option "Persönliche Benutzerordner" aktiviert werden.
 
 ## Alternative Authentifizierung für Mandanten
 

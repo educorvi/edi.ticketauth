@@ -1,0 +1,14 @@
+{
+    "plone_version": "6.2.0rc1",
+    "github_organization": "collective",
+    "title": "edi.ticketauth",
+    "use_prerelease_versions": "Yes",
+    "email": "bauer@starzel.de",
+    "python_package_name": "edi.ticketauth",
+    "feature_headless": false,
+    "description": "A new addon for Plone",
+    "author": "Philip Bauer",
+    "initialize_documentation": false,
+    "initialize_ci": false,
+    "__template__": "backend_addon"
+}

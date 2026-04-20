@@ -1,5 +1,5 @@
 from AccessControl.Permissions import add_user_folders
-from edi.ticketauth.plugin import EdiTicketAuth 
+from edi.ticketauth.plugin import EdiTicketAuth
 from edi.ticketauth.plugin import manage_addTicketPlugin
 from edi.ticketauth.plugin import manage_addTicketPluginForm
 from edi.ticketauth.plugin import zmidir
@@ -8,10 +8,15 @@ from zope.i18nmessageid import MessageFactory
 
 import os
 
-_ = MessageFactory('edi.ticketauth')
+__version__ = "1.0.0a0"
+
+PACKAGE_NAME = "edi.ticketauth"
+
+_ = MessageFactory(PACKAGE_NAME)
+
 
 def initialize(context):
-    print('ediTicket'*10)
+    print('ediTicket '*10)
     registerMultiPlugin(EdiTicketAuth.meta_type)
     context.registerClass(
         EdiTicketAuth,
