@@ -47,7 +47,7 @@
 
   <browser:page
       name="editicket-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="plone.base.interfaces.IPloneSiteRoot"
       class=".configpanel.EdiTicketControlPanelView"
       permission="cmf.ManagePortal"
       />

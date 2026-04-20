@@ -1,4 +1,4 @@
-<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h1 tal:replace="structure context/manage_page_header">Header</h1>
 
 <h2>
   Ticket Auth plugin</h2>
@@ -42,4 +42,4 @@ Add users and groups from Local Folders using the nva.inwimandant plugin.
     </tr>
   </table>
 </form>
-<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
+<h1 tal:replace="structure context/manage_page_footer">Footer</h1>
