@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
 from plone import schema
-from z3c.form import form
-from plone.z3cform import layout
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.registry.browser.controlpanel import RegistryEditForm
-from plone.autoform import directives
-from plone.restapi.controlpanels import RegistryConfigletPanel
-from zope.component import adapter
+from plone.z3cform import layout
+from z3c.form import form
 from zope.interface import Interface
+
 
 defaultmailsubject = "Neues Login-Ticket"
 
@@ -27,9 +24,12 @@ Sie können hier ein neues Ticket anfordern. Sie erhalten das Ticket per E-Mail.
 in Ihren SPAM-Ordner. Das Ticket hat eine Gültigkeit von einem Tag. Sie können das Ticket anstatt ihres
 Passwortes verwenden."""
 
+
 class IEdiTicketSettings(Interface):
-    
-    tickettitle = schema.TextLine(title="Bezeichnung des Tickets oder Kurzzeit-Passwortes (Don't call me Password).", default="Ticket")
+    tickettitle = schema.TextLine(
+        title="Bezeichnung des Tickets oder Kurzzeit-Passwortes (Don't call me Password).",
+        default="Ticket",
+    )
 
     ticketlogin = schema.TextLine(title="Benutzer für das Anlegen von Tickets")
 
@@ -37,20 +37,35 @@ class IEdiTicketSettings(Interface):
 
     validtime = schema.Int(title="Gültigkeit des Tickets in Tagen", default=1)
 
-    mailsubject = schema.TextLine(title="Betreff der E-Mail bei Anforderung eines neues Tickets", default=defaultmailsubject)
+    mailsubject = schema.TextLine(
+        title="Betreff der E-Mail bei Anforderung eines neues Tickets",
+        default=defaultmailsubject,
+    )
 
-    mailtext = schema.Text(title="Text der E-Mail.",
-                           description="Es können folgende Variablen verwendet werden: name, portalname, ticketgueltigkeit,\
+    mailtext = schema.Text(
+        title="Text der E-Mail.",
+        description="Es können folgende Variablen verwendet werden: name, portalname, ticketgueltigkeit,\
                                         email, ticket, portalurl. Bitte schreiben Sie {{ variablenname }}.",
-                           default=defaultmailtext)
-    
-    formtitle = schema.TextLine(title="Überschrift über das Formular zur Anforderung eines neuen Tickets", default="Ticket anfordern")
+        default=defaultmailtext,
+    )
 
-    formhelp = schema.Text(title="Hilfetext für das Formular zur Anforderung eines neuen Tickets", default=defaultformhelp)
+    formtitle = schema.TextLine(
+        title="Überschrift über das Formular zur Anforderung eines neuen Tickets",
+        default="Ticket anfordern",
+    )
+
+    formhelp = schema.Text(
+        title="Hilfetext für das Formular zur Anforderung eines neuen Tickets",
+        default=defaultformhelp,
+    )
+
 
 class EdiTicketPanelForm(RegistryEditForm):
     form.extends(RegistryEditForm)
     schema = IEdiTicketSettings
 
-EdiTicketControlPanelView = layout.wrap_form(EdiTicketPanelForm, ControlPanelFormWrapper)
-EdiTicketControlPanelView.label = u"Einstellungen edi.ticketauth"
+
+EdiTicketControlPanelView = layout.wrap_form(
+    EdiTicketPanelForm, ControlPanelFormWrapper
+)
+EdiTicketControlPanelView.label = "Einstellungen edi.ticketauth"

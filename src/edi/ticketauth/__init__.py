@@ -8,6 +8,7 @@ from zope.i18nmessageid import MessageFactory
 
 import os
 
+
 __version__ = "1.0.0a0"
 
 PACKAGE_NAME = "edi.ticketauth"
@@ -16,7 +17,7 @@ _ = MessageFactory(PACKAGE_NAME)
 
 
 def initialize(context):
-    print('ediTicket '*10)
+    print("ediTicket " * 10)
     registerMultiPlugin(EdiTicketAuth.meta_type)
     context.registerClass(
         EdiTicketAuth,

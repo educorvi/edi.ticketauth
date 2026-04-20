@@ -1,33 +1,46 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="example.conference">
-<body>
+      xml:lang="en"
+      i18n:domain="example.conference"
+>
+  <body>
 
-<metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main">
-      <div class="container">
-        <div class="row">
-	  <div class="col-12 col-lg-9">
-	    <h1 tal:content="view/formtitle">Neues Ticket anfordern</h1>
-            <form tal:attributes="action python:context.absolute_url()+'/newticket'">
-              <p tal:content="view/formhelp"/>  
-	      <div class="form-group">
-	        <label for="InputEmail">E-Mail Adresse</label>
-	        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
-	        <small id="emailHelp" class="form-text text-muted">Bitte geben Sie die im System hinterlegte E-Mail Adresse ein.</small>
-	      </div>
-	      <button type="submit" class="btn btn-primary">Absenden</button>
-	    </form>
-	  </div>
-	</div>
-      </div>
-    </tal:main-macro>
-</metal:main>
+    <metal:main fill-slot="main">
+      <tal:main-macro metal:define-macro="main">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-lg-9">
+              <h1 tal:content="view/formtitle">Neues Ticket anfordern</h1>
+              <form tal:attributes="
+                      action python:context.absolute_url()+'/newticket';
+                    ">
+                <p tal:content="view/formhelp"></p>
+                <div class="form-group">
+                  <label for="InputEmail">E-Mail Adresse</label>
+                  <input class="form-control"
+                         id="InputEmail"
+                         aria-describedby="emailHelp"
+                         name="email"
+                         required
+                         type="email"
+                  />
+                  <small class="form-text text-muted"
+                         id="emailHelp"
+                  >Bitte geben Sie die im System hinterlegte E-Mail Adresse ein.</small>
+                </div>
+                <button class="btn btn-primary"
+                        type="submit"
+                >Absenden</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </tal:main-macro>
+    </metal:main>
 
-</body>
+  </body>
 </html>
-

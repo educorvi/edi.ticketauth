@@ -2,39 +2,40 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="edi.ticketauth">
+    i18n_domain="edi.ticketauth"
+    >
 
   -*- extra stuff goes here -*-
 
   <browser:page
-    name="ticketapi"
-    for="*"
-    class=".ticketapi.Ticketapi"
-    permission="cmf.ModifyPortalContent"
-    />
+      name="ticketapi"
+      for="*"
+      class=".ticketapi.Ticketapi"
+      permission="cmf.ModifyPortalContent"
+      />
 
   <browser:page
-    name="newticket"
-    for="*"
-    class=".newticket.Newticket"
-    template="newticket.pt"
-    permission="zope2.View"
-    />
+      name="newticket"
+      for="*"
+      class=".newticket.Newticket"
+      template="newticket.pt"
+      permission="zope2.View"
+      />
 
   <browser:page
-    name="create-homefolders"
-    for="*"
-    class=".management.HomeFolders"
-    template="homefolders.pt"
-    permission="cmf.ModifyPortalContent"
-    />
+      name="create-homefolders"
+      for="*"
+      class=".management.HomeFolders"
+      template="homefolders.pt"
+      permission="cmf.ModifyPortalContent"
+      />
 
   <browser:page
-    name="create-tickets"
-    for="*"
-    class=".management.TicketsForUsers"
-    template="ticketsforusers.pt"
-    permission="cmf.ModifyPortalContent"
-    />
+      name="create-tickets"
+      for="*"
+      class=".management.TicketsForUsers"
+      template="ticketsforusers.pt"
+      permission="cmf.ModifyPortalContent"
+      />
 
 </configure>

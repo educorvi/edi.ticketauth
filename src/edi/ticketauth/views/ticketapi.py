@@ -1,75 +1,109 @@
-# -*- coding: utf-8 -*-
-
-from Products.Five.browser import BrowserView
-import json
-from plone import api as ploneapi
-from plone.protect.interfaces import IDisableCSRFProtection
-from zope.interface import alsoProvides
+from edi.ticketauth.content.ticket import ticketfactory
+from edi.ticketauth.content.ticket import titlefactory
+from edi.ticketauth.content.ticket import validfactory
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from jinja2 import Template
+from plone import api as ploneapi
+from plone.protect.interfaces import IDisableCSRFProtection
+from Products.Five.browser import BrowserView
+from zope.interface import alsoProvides
+
+import json
 import logging
-from edi.ticketauth.content.ticket import titlefactory, ticketfactory, validfactory
 import smtplib
+
 
 logger = logging.getLogger("edi.ticketauth")
 
+
 class Ticketapi(BrowserView):
     def __call__(self):
-        self.tickettitle = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.tickettitle')
+        self.tickettitle = ploneapi.portal.get_registry_record(
+            "edi.ticketauth.configpanel.IEdiTicketSettings.tickettitle"
+        )
         alsoProvides(self.request, IDisableCSRFProtection)
-        email = self.request.get('email')
-        local = self.request.get('local')
+        email = self.request.get("email")
+        local = self.request.get("local")
         if not email:
-            result = {'status': 'error', 'message': 'Fehler bei der Übermittlung der E-Mail-Adresse'}
-            return json.dumps(result) 
+            result = {
+                "status": "error",
+                "message": "Fehler bei der Übermittlung der E-Mail-Adresse",
+            }
+            return json.dumps(result)
         result = self.get_new_ticket(email)
-        if result.get('status') == 'success' and local == 'local':
-            self.send_mail_with_ticket(email, result.get('ticket'))
+        if result.get("status") == "success" and local == "local":
+            self.send_mail_with_ticket(email, result.get("ticket"))
         return json.dumps(result)
 
     def send_mail_with_ticket(self, email, ticket):
         member = ploneapi.user.get(username=email)
-        name = member.getProperty('fullname')
+        name = member.getProperty("fullname")
         portalname = ploneapi.portal.get().title
-        portalurl = ploneapi.portal.get().absolute_url() + '/login'
-        ticketgueltigkeit = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.validtime')
-        mailsubject = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.mailsubject')
-        mailtext = ploneapi.portal.get_registry_record('edi.ticketauth.configpanel.IEdiTicketSettings.mailtext')
-        mailtext = Template(mailtext).render(name=name, portalname=portalname, ticketgueltigkeit=ticketgueltigkeit, 
-                email=email, ticket=ticket, portalurl=portalurl)
-        mime_msg = MIMEMultipart('related')
-        mime_msg['Subject'] = mailsubject
-        mime_msg['From'] = ploneapi.portal.get_registry_record('plone.email_from_address')
-        mime_msg['To'] = email
-        mime_msg.preamble = 'This is a multi-part message in MIME format.'
-        msgAlternative = MIMEMultipart('alternative')
+        portalurl = ploneapi.portal.get().absolute_url() + "/login"
+        ticketgueltigkeit = ploneapi.portal.get_registry_record(
+            "edi.ticketauth.configpanel.IEdiTicketSettings.validtime"
+        )
+        mailsubject = ploneapi.portal.get_registry_record(
+            "edi.ticketauth.configpanel.IEdiTicketSettings.mailsubject"
+        )
+        mailtext = ploneapi.portal.get_registry_record(
+            "edi.ticketauth.configpanel.IEdiTicketSettings.mailtext"
+        )
+        mailtext = Template(mailtext).render(
+            name=name,
+            portalname=portalname,
+            ticketgueltigkeit=ticketgueltigkeit,
+            email=email,
+            ticket=ticket,
+            portalurl=portalurl,
+        )
+        mime_msg = MIMEMultipart("related")
+        mime_msg["Subject"] = mailsubject
+        mime_msg["From"] = ploneapi.portal.get_registry_record(
+            "plone.email_from_address"
+        )
+        mime_msg["To"] = email
+        mime_msg.preamble = "This is a multi-part message in MIME format."
+        msgAlternative = MIMEMultipart("alternative")
         mime_msg.attach(msgAlternative)
-        msg_text = MIMEText(mailtext, _subtype='html', _charset='utf-8')
+        msg_text = MIMEText(mailtext, _subtype="html", _charset="utf-8")
         msgAlternative.attach(msg_text)
-        mail_host = ploneapi.portal.get_tool(name='MailHost')
+        mail_host = ploneapi.portal.get_tool(name="MailHost")
         with smtplib.SMTP(mail_host.smtp_host) as server:
-            server.sendmail(ploneapi.portal.get_registry_record('plone.email_from_address'), [email], mime_msg.as_string())
+            server.sendmail(
+                ploneapi.portal.get_registry_record("plone.email_from_address"),
+                [email],
+                mime_msg.as_string(),
+            )
 
-        logmessage = 'E-Mail gesendet an: %s' % email
+        logmessage = "E-Mail gesendet an: %s" % email
         logger.info(logmessage)
 
     def get_new_ticket(self, email):
-        user = ploneapi.user.get(username=email) 
+        user = ploneapi.user.get(username=email)
         if not user:
-            result = {'status': 'error', 'message': f'Für diese E-Mail Adresse kann leider kein {self.tickettitle} ausgestellt werden.'}
+            result = {
+                "status": "error",
+                "message": f"Für diese E-Mail Adresse kann leider kein {self.tickettitle} ausgestellt werden.",
+            }
             return result
         userid = user.getId()
-        membership = ploneapi.portal.get_tool(name='portal_membership')
+        membership = ploneapi.portal.get_tool(name="portal_membership")
         memberfolder = membership.getHomeFolder(userid)
         if not memberfolder:
-            result = {'status': 'error', 'message': f'Für diese E-Mail Adresse kann leider kein {self.tickettitle} ausgestellt werden.'}
+            result = {
+                "status": "error",
+                "message": f"Für diese E-Mail Adresse kann leider kein {self.tickettitle} ausgestellt werden.",
+            }
             return result
-        ticketobject = ploneapi.content.create(type='Ticket',
-                                               title=titlefactory(),
-                                               valid=validfactory(),
-                                               ticket=ticketfactory(),
-                                               container=memberfolder)
+        ticketobject = ploneapi.content.create(
+            type="Ticket",
+            title=titlefactory(),
+            valid=validfactory(),
+            ticket=ticketfactory(),
+            container=memberfolder,
+        )
         ticket = ticketobject.ticket
-        result = {'status':'success', 'ticket':ticket}
+        result = {"status": "success", "ticket": ticket}
         return result

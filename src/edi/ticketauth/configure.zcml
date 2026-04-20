@@ -1,13 +1,17 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
-    xmlns:five="http://namespaces.zope.org/five"
-    i18n_domain="edi.ticketauth">
+    i18n_domain="edi.ticketauth"
+    >
 
-  <five:registerPackage package="." initialize=".initialize" />
+  <five:registerPackage
+      package="."
+      initialize=".initialize"
+      />
   <i18n:registerTranslations directory="locales" />
 
   <include package=".browser" />
@@ -19,18 +23,18 @@
   <genericsetup:registerProfile
       name="default"
       title="edi.ticketauth"
-      directory="profiles/default"
       description="Installs the edi.ticketauth add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
       post_handler=".setuphandlers.post_install"
       />
 
   <genericsetup:registerProfile
       name="uninstall"
       title="edi.ticketauth (uninstall)"
-      directory="profiles/uninstall"
       description="Uninstalls the edi.ticketauth add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
       post_handler=".setuphandlers.uninstall"
       />
 
@@ -44,8 +48,8 @@
   <browser:page
       name="editicket-controlpanel"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      permission="cmf.ManagePortal"
       class=".configpanel.EdiTicketControlPanelView"
+      permission="cmf.ManagePortal"
       />
 
   <include package=".views" />
