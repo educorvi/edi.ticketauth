@@ -44,6 +44,7 @@ class Newticket(BrowserView):
             "Authorization": "Bearer %s" % authtoken,
         }
         result = requests.get(url, params=payload, headers=headers, verify=False)
+        result.raise_for_status()
         resultdata = result.json()
         if resultdata["status"] == "success":
             statusmessage = f"Ihnen wurde gerade eine E-Mail mit dem neuen {self.tickettitle} zugestellt. Bitte schauen Sie auch in Ihren SPAM-Ordner."
