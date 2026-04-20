@@ -1,11 +1,10 @@
 # Copyright (c) 2007-2019 NovaReto GmbH
 # lwalther@novareto.de
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
-from App.class_init import InitializeClass
 from datetime import datetime
 from edi.ticketauth.interfaces import IEdiTicketAuthPlugin
 from plone import api
-from plone import api as ploneapi
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PluggableAuthService.interfaces import plugins as pas_interfaces
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
@@ -61,15 +60,15 @@ class EdiTicketAuth(BasePlugin):
         password = credentials.get("password")
         if login is None or password is None:
             return None
-        ticketmethod = ploneapi.portal.get_registry_record(
+        ticketmethod = api.portal.get_registry_record(
             name="ticketmethod", default=1
         )
         if ticketmethod == 1:
-            member = ploneapi.user.get(username=login)
+            member = api.user.get(username=login)
             if not member:
                 return None
             userid = member.getId()
-            membership = ploneapi.portal.get_tool(name="portal_membership")
+            membership = api.portal.get_tool(name="portal_membership")
             homefolder = membership.getHomeFolder(userid)
             if not homefolder:
                 return None
@@ -81,7 +80,7 @@ class EdiTicketAuth(BasePlugin):
                         if ticket.ticket == password:
                             return (userid, login)
         elif ticketmethod == 2:
-            user = ploneapi.content.find(portal_type="Benutzer", mandant_userid=login)
+            user = api.content.find(portal_type="Benutzer", mandant_userid=login)
             if not user:
                 return None
             logged = user[0].getObject()
@@ -101,7 +100,7 @@ class EdiTicketAuth(BasePlugin):
         **kw,
     ):
 
-        ticketmethod = ploneapi.portal.get_registry_record(
+        ticketmethod = api.portal.get_registry_record(
             name="ticketmethod", default=1
         )
         if ticketmethod == 1:
@@ -110,7 +109,7 @@ class EdiTicketAuth(BasePlugin):
         key = login or id
         mylist = []
         if key:
-            users = ploneapi.content.find(portal_type="Benutzer", mandant_userid=key)
+            users = api.content.find(portal_type="Benutzer", mandant_userid=key)
             for i in users:
                 mylist.append({
                     "id": i.mandant_userid,
@@ -118,7 +117,7 @@ class EdiTicketAuth(BasePlugin):
                     "pluginid": self.getId(),
                 })
         if kw.get("fullname"):
-            users = ploneapi.content.find(
+            users = api.content.find(
                 portal_type="Benutzer", Title=kw.get("fullname")
             )
             for i in users:
@@ -129,7 +128,7 @@ class EdiTicketAuth(BasePlugin):
                 })
 
         elif kw.get("email"):
-            users = ploneapi.content.find(
+            users = api.content.find(
                 portal_type="Benutzer", mandant_email=kw.get("email")
             )
             for i in users:
@@ -139,7 +138,7 @@ class EdiTicketAuth(BasePlugin):
                     "pluginid": self.getId(),
                 })
         elif kw.get("name"):
-            users = ploneapi.content.find(
+            users = api.content.find(
                 portal_type="Benutzer", mandant_userid=kw.get("name")
             )
             for i in users:
@@ -154,7 +153,7 @@ class EdiTicketAuth(BasePlugin):
 
     def getPropertiesForUser(self, user, request=None):
 
-        ticketmethod = ploneapi.portal.get_registry_record(
+        ticketmethod = api.portal.get_registry_record(
             name="ticketmethod", default=1
         )
         if ticketmethod == 1:
@@ -163,7 +162,7 @@ class EdiTicketAuth(BasePlugin):
         if user:
             userid = user.getUserId()
             try:
-                userbrains = ploneapi.content.find(
+                userbrains = api.content.find(
                     portal_type="Benutzer", mandant_userid=userid
                 )
             except:
@@ -194,7 +193,7 @@ class EdiTicketAuth(BasePlugin):
         if ticketdomain and ticketgroup:
             if principal.getProperty("email").endswith(ticketdomain):
                 return [ticketgroup]
-        users = ploneapi.content.find(
+        users = api.content.find(
             portal_type="Benutzer", mandant_userid=principal.getId()
         )
         if users:
